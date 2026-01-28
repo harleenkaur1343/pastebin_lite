@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
-    
+
     if (body.ttl_seconds !== undefined) {
       if (!Number.isInteger(body.ttl_seconds) || body.ttl_seconds < 1) {
         return NextResponse.json(
@@ -56,12 +56,15 @@ export async function POST(request: NextRequest) {
       await redis.expire(key, paste.ttl_seconds);
     }
     // Build response URL
-    const baseUrl = request.headers.get("host") || "localhost:3000";
-    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-    const url = `${protocol}://${baseUrl}/p/${id}`;
+    const origin = request.headers.get("origin");
+    const url = origin ? `${origin}/p/${id}` : `/p/${id}`;
+    // const baseUrl = request.headers.get("host") || "localhost:3000";
+    // const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+    // const url = `${protocol}://${baseUrl}/p/${id}`;
 
     return NextResponse.json({ id, url }, { status: 201 });
   } catch (error) {
+    console.log("Create paste err", error);
     return NextResponse.json(
       { error: "Invalid request body" },
       { status: 400 },

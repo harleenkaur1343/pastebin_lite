@@ -70,6 +70,7 @@ export async function GET(
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
+    console.log("Get paste err", error)
     return NextResponse.json({ error: "Paste not found" }, { status: 404 });
   }
 }

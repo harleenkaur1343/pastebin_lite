@@ -1,11 +1,18 @@
-import { notFound } from 'next/navigation';
-import not_found from '../../not-found';
+import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 
 async function getPaste(id: string) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/pastes/${id}`, {
-      cache: 'no-store',
+    // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+    // const res = await fetch(`/api/pastes/${id}`, {
+    //   cache: "no-store",
+    // });
+    const h = await headers();
+    const host = h.get("host");
+    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+
+    const res = await fetch(`${protocol}://${host}/api/pastes/${id}`, {
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -14,7 +21,7 @@ async function getPaste(id: string) {
 
     return await res.json();
   } catch (error) {
-    console.log("Error")
+    console.log("Error", error);
     return null;
   }
 }
@@ -24,13 +31,12 @@ export default async function ViewPaste({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const {id} = await params;
+  const { id } = await params;
   const paste = await getPaste(id);
-  console.log("Paste", paste)
+  console.log("Paste", paste);
 
   if (!paste) {
     notFound();
-    //return not_found();
   }
 
   return (
@@ -38,7 +44,7 @@ export default async function ViewPaste({
       <div className="max-w-4xl mx-auto">
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-4">Paste</h1>
-          
+
           <div className="mb-4 text-sm text-gray-600 space-y-1">
             {paste.expires_at && (
               <p>Expires at: {new Date(paste.expires_at).toLocaleString()}</p>
