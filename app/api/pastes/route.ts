@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     };
 
     const key = `paste:${id}`;
-    await redis.set(key, JSON.stringify(paste));
+    await redis.set(key, paste);
 
     //ACTIVATING Redis auto-delete
     if (paste.ttl_seconds) {
@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
   
     return NextResponse.json({ id, url }, { status: 201 });
   } catch (error) {
-    console.log("Create paste err", error);
     return NextResponse.json(
       { error: "Invalid request body" },
       { status: 400 },

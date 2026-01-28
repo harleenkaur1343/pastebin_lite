@@ -18,7 +18,6 @@ async function getPaste(id: string) {
 
     return await res.json();
   } catch (error) {
-    console.log("Error", error);
     return null;
   }
 }
@@ -30,7 +29,7 @@ export default async function ViewPaste({
 }) {
   const { id } = await params;
   const paste = await getPaste(id);
-  console.log("Paste", paste);
+  //console.log("Paste", paste);
 
   if (!paste) {
     notFound();
