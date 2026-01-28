@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     const body: CreatePasteRequest = await request.json();
 
     const content = String(body?.content ?? "");
-    console.log("Content", content.trim().length);
     if (content.trim().length === 0) {
       return NextResponse.json(
         { error: "Content is required and must be a non-empty string" },

@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 async function getPaste(id: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    console.log("Base url", baseUrl)
     const res = await fetch(`${baseUrl}/api/pastes/${id}`, {
       cache: 'no-store',
     });

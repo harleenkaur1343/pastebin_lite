@@ -34,7 +34,6 @@ export default function Home() {
       });
 
       const data = await res.json();
-      console.log("Data",data)
 
       if (!res.ok) {
         setError(data.error || 'Failed to create paste');
