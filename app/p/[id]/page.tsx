@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import not_found from '../../not-found';
 
 async function getPaste(id: string) {
   try {
@@ -13,6 +14,7 @@ async function getPaste(id: string) {
 
     return await res.json();
   } catch (error) {
+    console.log("Error")
     return null;
   }
 }
@@ -24,9 +26,11 @@ export default async function ViewPaste({
 }) {
   const {id} = await params;
   const paste = await getPaste(id);
+  console.log("Paste", paste)
 
   if (!paste) {
     notFound();
+    //return not_found();
   }
 
   return (
