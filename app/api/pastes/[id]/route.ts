@@ -48,7 +48,6 @@ export async function GET(
     paste.view_count += 1;
     await redis.set(key, paste);
 
-    // If we've now hit the max views, delete the paste
     if (paste.max_views !== null && paste.view_count >= paste.max_views) {
       await redis.del(key);
     }

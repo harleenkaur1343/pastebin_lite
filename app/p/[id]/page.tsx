@@ -3,10 +3,7 @@ import { headers } from "next/headers";
 
 async function getPaste(id: string) {
   try {
-    // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-    // const res = await fetch(`/api/pastes/${id}`, {
-    //   cache: "no-store",
-    // });
+   
     const h = await headers();
     const host = h.get("host");
     const protocol = process.env.NODE_ENV === "production" ? "https" : "http";

@@ -58,10 +58,7 @@ export async function POST(request: NextRequest) {
     // Build response URL
     const origin = request.headers.get("origin");
     const url = origin ? `${origin}/p/${id}` : `/p/${id}`;
-    // const baseUrl = request.headers.get("host") || "localhost:3000";
-    // const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-    // const url = `${protocol}://${baseUrl}/p/${id}`;
-
+  
     return NextResponse.json({ id, url }, { status: 201 });
   } catch (error) {
     console.log("Create paste err", error);
