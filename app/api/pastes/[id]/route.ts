@@ -13,7 +13,7 @@ export async function GET(
     const key = `paste:${id}`;
 
     const data = await redis.get(key);
-    // console.log("Redis data for the id", data);
+     console.log("Redis data for the id", data);
 
     if (!data) {
       return NextResponse.json({ error: "Paste not found" }, { status: 404 });
@@ -71,6 +71,7 @@ export async function GET(
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
+    console.log("Error while fetching paste",error)
     return NextResponse.json({ error: "Paste not found" }, { status: 404 });
   }
 }
